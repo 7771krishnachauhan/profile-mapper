@@ -1,36 +1,50 @@
 // src/pages/ProfileDetails.js
-import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { ProfilesContext } from '../context/ProfilesContext';
+import React, { useEffect, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import GoogleMapComponent from '../components/GoogleMap/GoogleMap';
 import MapView from '../components/MapView/MapView';
 import './ProfileDetails.css';
 
 const ProfileDetails = () => {
   const { id } = useParams();
-  const { profiles, setSelectedProfile } = useContext(ProfilesContext);
-
-  const profile = profiles.find(p => p.id === parseInt(id));
+  const location = useLocation();
+  const [profile, setProfile] = useState(null);
+  const [showSummary, setShowSummary] = useState(false);
 
   useEffect(() => {
-    setSelectedProfile(profile);
-  }, [profile, setSelectedProfile]);
+    const params = new URLSearchParams(location.search);
+    if (params.get('summary') === 'true') {
+      setShowSummary(true);
+    }
+
+    fetch('/profiles.json')
+      .then(response => response.json())
+      .then(data => {
+        const foundProfile = data.find(p => p.id === parseInt(id, 10));
+        setProfile(foundProfile);
+      })
+      .catch(error => console.error('Error fetching profile:', error));
+  }, [id, location.search]);
 
   if (!profile) {
-    return <div className="profile-details">Profile not found.</div>;
+    return <div className="profile-details"><p>Loading profile...</p></div>;
   }
 
-  const { name, email, phone, address } = profile;
+  const { name, photo, description, address } = profile;
   const { street, city, state, zipcode, geo } = address;
+  const position = [parseFloat(geo.lat), parseFloat(geo.lng)];
 
   return (
     <div className="profile-details">
+      <img src={photo} alt={`${name}`} className="profile-photo" />
       <h2>{name}</h2>
-      <p><strong>Email:</strong> {email}</p>
-      <p><strong>Phone:</strong> {phone}</p>
-      <p>
-        <strong>Address:</strong> {street}, {city}, {state} {zipcode}
-      </p>
-      <MapView position={{ lat: parseFloat(geo.lat), lng: parseFloat(geo.lng) }} name={name} />
+      <p>{description}</p>
+      <h3>Address:</h3>
+      <p>{`${street}, ${city}, ${state} - ${zipcode}`}</p>
+      
+      {showSummary && <GoogleMapComponent position={position} name={name} />}
+      {/* Alternatively, use MapView */}
+      {showSummary && <MapView position={position} name={name} />}
     </div>
   );
 };

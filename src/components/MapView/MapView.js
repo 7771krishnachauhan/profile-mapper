@@ -1,28 +1,26 @@
 // src/components/MapView/MapView.js
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import './MapView.css';
 import L from 'leaflet';
+import './MapView.css';
 
-// Fix default icon issues with Leaflet in React
+// Fix Leaflet's default icon issues with Webpack
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png').default,
+  iconUrl: require('leaflet/dist/images/marker-icon.png').default,
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png').default,
 });
 
 const MapView = ({ position, name }) => {
-  const { lat, lng } = position;
-
   return (
-    <MapContainer center={[lat, lng]} zoom={13} scrollWheelZoom={false} className="map-view">
+    <MapContainer center={position} zoom={13} scrollWheelZoom={false} className="map-view">
       <TileLayer
         attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[lat, lng]}>
+      <Marker position={position}>
         <Popup>{name}'s Location</Popup>
       </Marker>
     </MapContainer>

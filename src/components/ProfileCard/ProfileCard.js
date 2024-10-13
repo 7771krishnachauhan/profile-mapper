@@ -1,14 +1,39 @@
 // src/components/ProfileCard/ProfileCard.js
 import React from 'react';
-import './ProfileCard.css';
+import { Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const ProfileCard = ({ profile, onSelect }) => {
+const ProfileCard = ({ profile }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/profile/${profile.id}`);
+  };
+  const handleShowSummary = () => {
+    navigate(`/profile/${profile.id}?summary=true`);
+  };
+
   return (
-    <div className="profile-card" onClick={onSelect}>
-      <h3>{profile.name}</h3>
-      <p>{profile.email}</p>
-      <p>{profile.phone}</p>
-    </div>
+    <Card sx={{ maxWidth: 345, margin: 2 }}>
+      <CardMedia
+        component="img"
+        height="200"
+        image={profile.photo}
+        alt={profile.name}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {profile.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {profile.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={handleViewDetails}>View Details</Button>
+        <Button size="small" onClick={handleShowSummary}>Summary</Button>
+      </CardActions>
+    </Card>
   );
 };
 
