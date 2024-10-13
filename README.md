@@ -6,6 +6,12 @@ Profile Mapper is a web application built with React that allows users to view a
 
 Check out the live demo of the application [here](https://profile-mapper-five.vercel.app/).
 
+![image](https://github.com/user-attachments/assets/b059b7e0-e6c4-4e32-9237-f0ff23ba605a)
+![image](https://github.com/user-attachments/assets/c4d29e8d-d656-49fa-b895-6f1a601a4893)
+![image](https://github.com/user-attachments/assets/b7975542-8cbc-428b-adfb-00597e715c8a)
+
+
+
 
 ## Features
 
