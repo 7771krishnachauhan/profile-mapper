@@ -1,7 +1,7 @@
-// src/components/GoogleMap/GoogleMap.js
-import React from 'react';
+// src/components/GoogleMapComponent/GoogleMapComponent.js
+import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-// import './GoogleMap.css';
+import './GoogleMapComponent.css';
 
 const containerStyle = {
   width: '100%',
@@ -9,12 +9,10 @@ const containerStyle = {
 };
 
 const GoogleMapComponent = ({ position, name }) => {
-  const [selected, setSelected] = React.useState(false);
+  const [selected, setSelected] = useState(false);
 
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyBjSGGrnYM4saznGjjzA0XRggGDW7wHHEI" // Replace with your API key
-    >
+    <LoadScript googleMapsApiKey="AIzaSyBjSGGrnYM4saznGjjzA0XRggGDW7wHHEI"> {/* Replace with your API key */}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={position}

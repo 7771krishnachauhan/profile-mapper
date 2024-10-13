@@ -1,8 +1,8 @@
 // src/pages/ProfileDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import GoogleMapComponent from '../components/GoogleMap/GoogleMap';
-import MapView from '../components/MapView/MapView';
+import GoogleMapComponent from '../components/GoogleMapComponent/GoogleMapComponent';
+
 import './ProfileDetails.css';
 
 const ProfileDetails = () => {
@@ -43,8 +43,7 @@ const ProfileDetails = () => {
       <p>{`${street}, ${city}, ${state} - ${zipcode}`}</p>
       
       {showSummary && <GoogleMapComponent position={position} name={name} />}
-      {/* Alternatively, use MapView */}
-      {showSummary && <MapView position={position} name={name} />}
+      
     </div>
   );
 };
