@@ -33,7 +33,7 @@ const ProfileDetails = () => {
   const { name, photo, description, address } = profile;
   const { street, city, state, zipcode, geo } = address;
   const position = [parseFloat(geo.lat), parseFloat(geo.lng)];
-
+   
   return (
     <div className="profile-details">
       <img src={photo} alt={`${name}`} className="profile-photo" />

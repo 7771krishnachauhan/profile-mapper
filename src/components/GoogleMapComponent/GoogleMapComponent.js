@@ -12,19 +12,19 @@ const GoogleMapComponent = ({ position, name }) => {
   const [selected, setSelected] = useState(false);
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyBjSGGrnYM4saznGjjzA0XRggGDW7wHHEI"> {/* Replace with your API key */}
+    <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API }> {/* Replace with your API key */}
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={position}
+        center={{lat:position[0], lng: position[1]}}
         zoom={13}
       >
         <Marker
-          position={position}
+          position={{lat:position[0], lng: position[1]}}
           onClick={() => setSelected(true)}
         />
         {selected && (
           <InfoWindow
-            position={position}
+            position={{lat:position[0], lng: position[1]}}
             onCloseClick={() => setSelected(false)}
           >
             <div>
